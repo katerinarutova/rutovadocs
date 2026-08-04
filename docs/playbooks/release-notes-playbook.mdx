@@ -1,8 +1,508 @@
 ---
-title: How to Write Release Notes People Actually Read
+title: "How to Write Release Notes People Actually Read"
+description: "A practical guide to writing clear, useful, and readable release notes that explain user impact."
 sidebar_position: 3
+tags:
+  - release-notes
+  - documentation
+  - technical-writing
+  - product-communication
+  - content-design
 ---
 
 # How to Write Release Notes People Actually Read
 
-This playbook is currently being prepared.
+Release notes are not just a list of completed tickets. They are the connection between a product team and the people affected by its work.
+
+Effective release notes help users understand:
+
+- what changed
+- why the change matters
+- whether it affects them
+- whether they need to take action
+
+Poor release notes force users to interpret internal terminology, search for missing context, or contact support for information that should already be available.
+
+:::tip
+A useful release note answers three questions:
+
+1. What changed?
+2. Who or what does it affect?
+3. Does the user need to do anything?
+:::
+
+---
+
+## 1. Define the Audience
+
+Release notes for end users should not look the same as release notes for developers, administrators, or integration partners.
+
+Before writing, identify:
+
+- who will read the release notes
+- how technical the audience is
+- which workflows or environments they use
+- what risks or actions matter to them
+- what supporting documentation they may need
+
+For example:
+
+| Audience | Primary concerns |
+| --- | --- |
+| End users | New functionality, workflow changes, resolved problems |
+| Administrators | Configuration, permissions, deployment, upgrade requirements |
+| Developers | APIs, SDKs, schemas, authentication, breaking changes |
+| Support teams | User impact, known issues, workarounds, affected versions |
+
+:::info
+The audience determines the terminology, level of detail, examples, and format you should use.
+:::
+
+---
+
+## 2. Collect Accurate Information Early
+
+Do not wait until the release is ready to publish before asking what changed.
+
+Collect information from:
+
+- engineering
+- product management
+- quality assurance
+- security or compliance teams, when relevant
+- support teams, when they have customer-impact context
+
+For each change, establish:
+
+- what behavior changed
+- why it changed
+- who or what is affected
+- whether the change is backward compatible
+- whether users need to take action
+- whether documentation must be updated
+- whether any limitations or known issues remain
+
+:::warning
+Do not publish a change you do not understand. If the writer cannot explain it clearly, users will not be able to interpret it reliably.
+:::
+
+A ticket title is not sufficient source material. Internal tickets are usually written for implementation and tracking, not for customer communication.
+
+---
+
+## 3. Classify the Change Before Writing
+
+Decide what kind of information you are communicating before drafting the entry.
+
+Common categories include:
+
+- **New Features** for new capabilities
+- **Upgrade Considerations** for preparation or required actions
+- **Improvements** for enhancements to existing behavior
+- **Bug Fixes** for resolved problems
+- **Known Issues** for unresolved limitations
+- **Deprecations / Removals** for functionality that is being retired
+- **Technical Notes** for developer, administrator, or integration-level changes
+
+Correct classification helps users find relevant information quickly.
+
+A performance improvement is not automatically a new feature. A breaking API change should not be buried under general improvements. A required migration belongs in upgrade information, even when it results from a new feature.
+
+---
+
+## 4. Lead With the User-Visible Outcome
+
+Start with what the user will notice, not with the internal implementation.
+
+### Before
+
+> Updated the authentication handler to preserve session state during token refresh.
+
+### After
+
+> **Authentication sessions now remain active after token refresh**
+>
+> Users are no longer signed out unexpectedly when an authentication token is refreshed.
+
+The revised version explains the actual behavior and removes implementation detail that most users do not need.
+
+:::tip
+A release note title should usually describe the result, not the development task.
+:::
+
+Useful title patterns include:
+
+- Users can now...
+- Administrators can now...
+- Authentication no longer...
+- Exported reports now...
+- API responses now include...
+- Support for ... has been added
+- ... is now deprecated
+
+Avoid titles such as:
+
+- Various improvements
+- Updated backend logic
+- Fixed issue
+- Changes to authentication
+- General performance updates
+
+These titles do not help readers understand whether an entry is relevant to them.
+
+---
+
+## 5. Explain Why the Change Matters
+
+Do not stop after stating what changed. Explain the effect on the user, workflow, environment, or integration.
+
+### Weak
+
+> Added filtering to the activity log.
+
+### Better
+
+> **Activity logs can now be filtered by user and date**
+>
+> Administrators can narrow activity log results without exporting and manually searching the complete log.
+
+The second version connects the feature to a practical task.
+
+Not every entry needs promotional language. The goal is clarity, not advertising. Describe the benefit only when it is real and specific.
+
+---
+
+## 6. State Impact and Required Action
+
+Users should not have to infer whether a change affects them.
+
+When relevant, include:
+
+- affected roles
+- affected product editions
+- affected deployment models
+- affected operating systems or environments
+- backward compatibility
+- configuration requirements
+- migration steps
+- expected downtime
+- required action
+
+A reusable drafting pattern can help:
+
+```md
+### Clear, user-focused title
+
+Briefly explain what changed and why it matters.
+
+**Impact:** Describe affected users, workflows, environments, or integrations.
+
+**Action required:** State the required step, or write `None`.
+
+**Learn more:** Link to relevant documentation.
+```
+
+Not every field needs to be displayed for every change. The pattern works as a checklist that prevents important information from being omitted.
+
+:::warning
+Required actions should never be hidden at the end of a long paragraph.
+:::
+
+---
+
+## 7. Use a Predictable Structure
+
+Use the same core sections across releases.
+
+A predictable structure makes release notes easier to scan and compare. Readers learn where to find new features, upgrade risks, fixes, and unresolved problems.
+
+A practical release structure is:
+
+1. New Features
+2. Upgrade Considerations
+3. Improvements
+4. Bug Fixes
+5. Known Issues
+6. Deprecations / Removals
+7. Technical Notes
+
+Optional sections should be omitted when they contain no information. Do not add empty headings simply to preserve the template.
+
+:::tip
+Consistency does not mean every release must have identical content. It means the same type of information should appear in the same place.
+:::
+
+---
+
+## 8. Write Bug Fixes From the User's Perspective
+
+Do not copy internal bug titles directly.
+
+### Before
+
+> Fixed ALX-2841 where the export worker failed when processing null values.
+
+### After
+
+> **Exports no longer fail when records contain empty values**
+>
+> CSV exports now complete successfully when optional fields contain no value.
+
+The revised version removes:
+
+- the internal ticket number
+- component-level implementation language
+- terminology that does not help the user
+
+It replaces them with:
+
+- the behavior users experienced
+- the scenario in which it occurred
+- confirmation of the corrected result
+
+---
+
+## 9. Document Known Issues Honestly
+
+Known issues are useful only when they help users recognize, avoid, or work around a problem.
+
+Include:
+
+1. what is not working
+2. which users or scenarios are affected
+3. the practical impact
+4. a workaround, when available
+5. a confirmed status or timeline, when it can be shared
+
+### Example
+
+> **Scheduled exports may fail when the file name contains special characters**
+>
+> Scheduled CSV exports can fail when the configured file name contains characters such as `&` or `#`.
+>
+> **Workaround:** Use letters, numbers, hyphens, or underscores in the file name until the issue is resolved.
+
+Do not use vague entries such as:
+
+> Export problems may occur in some cases.
+
+That does not give users enough information to identify or avoid the problem.
+
+:::warning
+Never promise a fix date unless it has been confirmed and is appropriate to share externally.
+:::
+
+---
+
+## 10. Communicate Breaking Changes Directly
+
+Breaking changes must be easy to find.
+
+State:
+
+- what is changing
+- why existing behavior will stop working
+- which versions or integrations are affected
+- when the change takes effect
+- what users must do
+- where migration instructions are available
+
+### Example
+
+> **API requests using basic authentication will stop working in version 6.0**
+>
+> Starting with version 6.0, the API will accept OAuth 2.0 authentication only.
+>
+> **Action required:** Update integrations to use OAuth 2.0 before upgrading to version 6.0.
+>
+> **Learn more:** See the authentication migration guide.
+
+Do not hide breaking changes under headings such as **Improvements** or **Technical Updates**.
+
+---
+
+## 11. Keep Version Information Visible
+
+Users must be able to identify which release the information applies to.
+
+Place the following information near the top:
+
+- product or component name
+- version number
+- release date
+- deployment model or environment, when relevant
+- release type, when relevant
+
+For example:
+
+```md
+# Product Name 5.4 Release Notes
+
+**Release date:** August 4, 2026  
+**Deployment:** Cloud  
+**Release type:** Monthly production release
+```
+
+This information is especially important when several versions or deployment models are supported at the same time.
+
+---
+
+## 12. Link to Supporting Documentation
+
+Release notes should summarize a change, not replace complete documentation.
+
+Link to:
+
+- upgrade instructions
+- migration guides
+- new feature documentation
+- API reference pages
+- configuration procedures
+- compatibility matrices
+- security advisories
+
+Use descriptive link text.
+
+### Avoid
+
+```md
+For more information, click [here](...).
+```
+
+### Prefer
+
+```md
+See [Configure OAuth 2.0 authentication](...) for setup instructions.
+```
+
+The link should tell users what they will find before they open it.
+
+---
+
+## 13. Review for Accuracy and Clarity
+
+Release notes should be reviewed by the people who can validate their content.
+
+A practical review can include:
+
+- **Engineering** for technical accuracy
+- **Product management** for scope and intended behavior
+- **Quality assurance** for resolved behavior and limitations
+- **Technical writing** for structure, clarity, consistency, and audience fit
+- **Support** for customer impact and recognizable terminology
+
+Before publication, verify that:
+
+- titles are specific and scannable
+- descriptions explain user-visible behavior
+- affected users and environments are identified
+- required actions are visible
+- known issues include practical impact
+- breaking changes are clearly labeled
+- terminology matches the product documentation
+- links work
+- internal ticket IDs and confidential details are removed
+- version and release information are correct
+
+---
+
+## 14. Publish Where Users Actually Look
+
+Choose distribution channels based on the product and audience.
+
+Possible channels include:
+
+- documentation site
+- changelog
+- in-product notification
+- administrator dashboard
+- email
+- developer portal
+- app store release notes
+- support portal
+
+The same content should not necessarily be copied into every channel.
+
+A documentation site can contain detailed upgrade information. An in-product message may need a short summary and a link. App store notes should be brief and focused on visible user changes.
+
+:::info
+Adapt the length and level of detail to the channel, while keeping the underlying information consistent.
+:::
+
+---
+
+## Quick Release Note Template
+
+```md
+# Product Name X.Y Release Notes
+
+**Release date:** Month DD, YYYY  
+**Deployment:** Cloud / On-premises / Both
+
+## New Features
+
+### User-focused feature title
+
+Explain what users can now do and why it is useful.
+
+## Upgrade Considerations
+
+### Required upgrade action
+
+Explain what must be completed before or after upgrading.
+
+## Improvements
+
+### User-focused improvement title
+
+Explain what became faster, clearer, safer, or easier.
+
+## Bug Fixes
+
+### Resolved behavior
+
+Explain the problem users experienced and confirm the corrected behavior.
+
+## Known Issues
+
+### Specific known limitation
+
+Explain the affected scenario, impact, and workaround.
+
+## Deprecations / Removals
+
+### Deprecated functionality
+
+Explain the timeline, impact, and recommended alternative.
+
+## Technical Notes
+
+Add relevant API, SDK, infrastructure, dependency, or configuration details.
+```
+
+---
+
+## Final Checklist
+
+Before publishing, ask:
+
+- Is the target audience clear?
+- Does every entry describe user-visible behavior?
+- Is the impact understandable?
+- Are required actions clearly marked?
+- Are breaking changes easy to find?
+- Are known issues specific and useful?
+- Is internal terminology removed?
+- Are version and release details visible?
+- Do all links work?
+- Can readers scan the page and find what matters to them?
+
+Good release notes are not necessarily long. They are accurate, structured, specific, and useful.
+
+---
+
+## Related Project
+
+See how these principles can be implemented as a repeatable documentation process:
+
+[Release Notes System](/docs/projects/release-notes-system)
