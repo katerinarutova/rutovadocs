@@ -1,8 +1,347 @@
 ---
-title: Why API Docs Fail
+title: "Why API Documentation Fails"
+description: "API documentation can be technically accurate and still be unusable. Here are the gaps that cause integrations to fail."
 sidebar_position: 1
+tags:
+  - api-documentation
+  - developer-experience
+  - documentation-quality
+  - api-design
+  - technical-writing
 ---
 
-# Why API Docs Fail
+# Why API Documentation Fails
 
-This article is currently being prepared.
+I once asked for access to a sandbox before documenting a small internal API.
+
+The developer asked:
+
+> Why do you need that?
+
+Because the existing documentation did not explain how to authenticate, and the authentication flow worked differently from another product in the same ecosystem.
+
+The endpoints existed. The schemas were documented. The implementation worked.
+
+But none of that proved that a new developer could successfully make the first request.
+
+---
+
+## Technically Correct Does Not Mean Usable
+
+API documentation can accurately describe every endpoint and still fail its users.
+
+This happens when documentation is treated primarily as a record of the API rather than as part of the developer experience.
+
+A reference may correctly list:
+
+- endpoint paths
+- HTTP methods
+- request parameters
+- response schemas
+- status codes
+
+But an integration requires more than isolated facts.
+
+Developers also need to understand:
+
+- where to begin
+- how authentication works in practice
+- which endpoints belong to the same workflow
+- which values are required in a real scenario
+- what a successful request looks like
+- what can fail and how to recover
+- which assumptions are not visible in the schema
+
+The information may exist somewhere in the organization. That does not mean it exists in a form that an external developer can use.
+
+---
+
+## An API Specification Is Not a Complete Documentation Experience
+
+OpenAPI is extremely useful. It provides a structured description of an API and can generate consistent, searchable reference documentation.
+
+But an API specification is not a substitute for user guidance.
+
+It can describe:
+
+- available operations
+- parameters and data types
+- request and response bodies
+- authentication schemes
+- possible response codes
+
+It does not automatically explain:
+
+- the business purpose of an endpoint
+- the correct order of operations
+- how to obtain credentials
+- how authentication behaves across environments
+- which response values are needed in the next request
+- which configuration must exist before the request is sent
+- how to complete a realistic end-to-end workflow
+
+:::info
+A specification describes the API contract. Documentation must also explain how to use that contract successfully.
+:::
+
+Generated reference documentation is therefore a foundation, not the finished product.
+
+The problem becomes even more visible when the API specification and usage guidance are maintained as separate documentation products.
+
+---
+
+## Reference Documentation Without Usage Context
+
+A reference may document every endpoint and parameter accurately while still leaving developers unable to decide what to use.
+
+This commonly happens when parameter definitions live in an OpenAPI specification, while usage guidance is maintained separately by another team. The reference explains what a parameter accepts, but not:
+
+- when to use it
+- why one value should be chosen over another
+- which parameters belong to the same workflow
+- which combinations are valid
+- how behavior differs between products or environments
+
+When no team owns the complete documentation experience, the specification and supporting guidance gradually drift apart.
+
+From the user's perspective, ownership boundaries are irrelevant. They see one API and expect one coherent path from understanding the use case to sending a successful request.
+
+---
+
+## The Most Common Failure Modes
+
+### Authentication Is Described but Not Explained
+
+The reference may show an `Authorization` header or an OAuth 2.0 security scheme without explaining the actual process.
+
+Developers still need to know:
+
+- where credentials come from
+- which grant type to use
+- which scopes are required
+- how long tokens remain valid
+- how tokens are refreshed
+- whether authentication differs between environments
+- which errors indicate an authentication or permission problem
+
+Authentication is often the first interaction a developer has with an API. When that first step is unclear, the rest of the reference is effectively inaccessible.
+
+---
+
+### Examples Are Missing or Cannot Be Used
+
+Schemas show what a request can contain. Developers need to see what a realistic request should contain.
+
+Weak examples are often:
+
+- incomplete
+- filled with meaningless placeholder values
+- inconsistent with the schema
+- missing required headers
+- based on internal environments
+- impossible to copy and run
+- disconnected from the surrounding workflow
+
+A useful example should represent a believable scenario and match the documented behavior.
+
+It should help the developer answer:
+
+> What is the smallest valid request I can send to confirm that the integration works?
+
+---
+
+### Endpoints Are Documented in Isolation
+
+An API reference usually organizes information by resources and operations. Users think in goals.
+
+A developer may need to:
+
+1. authenticate
+2. create a resource
+3. retrieve its identifier
+4. use that identifier in another request
+5. poll the operation status
+6. retrieve the final result
+
+Documenting all six endpoints does not automatically explain this workflow.
+
+Without task-oriented guidance, developers must reconstruct the process themselves by searching across unrelated reference pages.
+
+---
+
+### The Documentation Cannot Be Tested
+
+Documentation quality is difficult to verify without access to a working environment.
+
+When writers cannot use a sandbox, QA environment, mock server, or test account, they may be unable to confirm:
+
+- whether the authentication instructions work
+- whether required fields are actually required
+- whether examples match real responses
+- whether defaults behave as described
+- whether error messages are accurate
+- whether steps are missing
+- whether the documented workflow can be completed
+
+The result may be technically reviewed and still fail during the first real integration attempt.
+
+:::warning
+A review of the text is not the same as a test of the documented workflow.
+:::
+
+---
+
+### Error Documentation Stops at the Status Code
+
+A list of response codes is useful, but it rarely tells developers enough to resolve a problem.
+
+For example:
+
+```text
+400 Bad Request
+```
+
+does not explain:
+
+- what was invalid
+- which field caused the failure
+- what error body is returned
+- whether the request can be retried
+- what the developer should change
+- whether similar errors share the same status code
+
+Good error documentation connects the API response to a corrective action.
+
+---
+
+### Internal Knowledge Is Treated as Common Knowledge
+
+Product teams work with the same systems every day. Over time, important assumptions become invisible to them.
+
+Experts may forget to mention that:
+
+- an administrator must enable the integration first
+- a resource must exist before another endpoint can be called
+- a permission is granted only through a separate product
+- IDs differ between environments
+- a background operation can take several minutes
+- a field is required only under a specific condition
+- an endpoint is not supported for every deployment model
+
+Nothing about these details feels unusual to the team. To a new developer, they may be the difference between success and failure.
+
+---
+
+## Why Reviews Often Miss These Problems
+
+API documentation is frequently reviewed for technical accuracy.
+
+The reviewer checks whether:
+
+- the endpoint exists
+- parameter names are correct
+- the schema matches the implementation
+- the description is factually accurate
+
+Those checks matter, but they do not answer the main usability question:
+
+> Can someone unfamiliar with the system complete the intended task using only this documentation?
+
+A subject matter expert can understand incomplete documentation because they already know the missing context. This makes experts essential for accuracy review but unreliable as the only usability test.
+
+The documentation must also be examined from the perspective of someone who does not already know how the system works.
+
+---
+
+## Documentation Should Be Tested as a Workflow
+
+Before publishing an API guide, I try to follow it as a new developer would.
+
+That means checking whether I can:
+
+1. identify the correct starting point
+2. obtain or configure authentication
+3. send the first valid request
+4. understand the response
+5. use returned values in the next step
+6. recognize and resolve common errors
+7. complete the intended workflow
+
+When something fails, the failure becomes a documentation question:
+
+- Was a prerequisite missing?
+- Was a required value unclear?
+- Did the example use an invalid identifier?
+- Was an environment-specific step omitted?
+- Did the API behave differently from the specification?
+- Was the workflow itself poorly designed?
+
+This process may reveal documentation defects, implementation defects, or both.
+
+---
+
+## What Good API Documentation Provides
+
+Useful API documentation usually combines several content types.
+
+### A Clear Entry Point
+
+Developers should quickly understand:
+
+- what the API is for
+- who can use it
+- what they need before starting
+- which environment or base URL to use
+- where the first successful request begins
+
+### Practical Authentication Guidance
+
+Authentication documentation should explain the complete setup and token flow, not only name the security scheme.
+
+### Task-Oriented Guides
+
+Guides should connect individual operations into workflows based on developer goals.
+
+### Accurate API Reference
+
+The reference should provide complete and consistent details for every operation, parameter, schema, response, and error.
+
+### Working Examples
+
+Examples should use valid syntax, realistic values, required headers, and responses that match actual behavior.
+
+### Useful Error Information
+
+Developers should be able to understand what went wrong and what to change.
+
+### Constraints and Limitations
+
+Rate limits, permissions, asynchronous behavior, unsupported configurations, and environment differences should be visible before they cause integration failures.
+
+---
+
+## The Real Quality Test
+
+The strongest indicator of API documentation quality is not how complete it looks.
+
+It is whether a developer unfamiliar with the system can use it to achieve a meaningful result without requiring undocumented help from the product team.
+
+That does not mean every question can be eliminated. Complex integrations may still require support.
+
+But documentation should not force developers to ask for information that the product team already knew and could have documented.
+
+Good API documentation reduces the distance between:
+
+> The API works.
+
+and:
+
+> A new developer can make it work.
+
+---
+
+## Related Playbook
+
+Accurate documentation begins with effective information gathering and validation:
+
+[SME Interviewing Playbook](/docs/playbooks/sme-interviewing-playbook)
