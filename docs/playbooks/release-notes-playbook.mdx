@@ -294,30 +294,44 @@ Never promise a fix date unless it has been confirmed and is appropriate to shar
 
 ---
 
-## 10. Communicate Breaking Changes Directly
+## 10. Make Upgrade Impact Clear
 
-Breaking changes must be easy to find.
+Any change that can affect an upgrade, existing configuration, workflow, or integration should be documented under **Upgrade Considerations**.
+
+This includes:
+
+- backward-incompatible API changes
+- removed or renamed configuration options
+- authentication changes
+- required data migrations
+- changes to system requirements
+- removed support for an operating system, database, or runtime
+- changes to default behavior
+- required manual steps before or after upgrading
 
 State:
 
 - what is changing
-- why existing behavior will stop working
-- which versions or integrations are affected
+- who or what is affected
 - when the change takes effect
 - what users must do
-- where migration instructions are available
+- where detailed migration or upgrade instructions are available
 
 ### Example
 
-> **API requests using basic authentication will stop working in version 6.0**
+> **OAuth 2.0 is required for API authentication**
 >
-> Starting with version 6.0, the API will accept OAuth 2.0 authentication only.
+> Starting with version 6.0, API requests using basic authentication are no longer supported.
+>
+> **Affected users:** Customers with integrations that use basic authentication.
 >
 > **Action required:** Update integrations to use OAuth 2.0 before upgrading to version 6.0.
 >
 > **Learn more:** See the authentication migration guide.
 
-Do not hide breaking changes under headings such as **Improvements** or **Technical Updates**.
+:::warning
+Do not hide required upgrade actions under general improvements or technical notes. Users should be able to identify upgrade risks before deployment.
+:::
 
 ---
 
