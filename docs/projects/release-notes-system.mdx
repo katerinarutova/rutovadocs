@@ -1,8 +1,222 @@
 ---
-title: Release Notes System
+title: "Release Notes System"
+description: "Case study: Designing a predictable and scalable release notes framework that improves clarity, ownership, and release communication."
 sidebar_position: 2
+tags:
+  - release-notes
+  - case-study
+  - documentation-strategy
+  - content-design
+  - docs-as-code
 ---
 
 # Release Notes System
 
-This project is currently being prepared.
+Release notes often begin as a simple list of completed tickets. As products and teams grow, that approach stops working.
+
+In this project, different teams used different structures, terminology, and levels of detail. Important upgrade information was difficult to find, internal ticket language appeared in customer-facing content, and users had to work out what each change actually meant for them.
+
+I designed a **clear, consistent, and reusable release notes system** that could be used across teams and releases.
+
+> **My role:** Documentation strategy, content design, template creation, workflow design, and authoring guidance.
+
+---
+
+## Project Goal
+
+Create a unified release notes process that:
+
+- communicates product changes from the user's perspective
+- uses a predictable structure across releases
+- scales across multiple teams and contributors
+- separates new functionality, improvements, fixes, and risks
+- makes upgrade impact and required actions visible
+- establishes clear ownership and review responsibilities
+- reduces ambiguity for customers and support teams
+
+---
+
+## Initial Issues Identified
+
+Before the overhaul, release notes had several recurring problems:
+
+- inconsistent sections and naming
+- descriptions copied directly from internal tickets
+- technical language that did not match the target audience
+- missing explanation of user impact
+- known issues documented inconsistently or omitted
+- upgrade risks buried among routine changes
+- inconsistent version and release information
+- unclear ownership and approval responsibilities
+- last-minute content collection before publication
+
+The core problem was not only writing quality. The release process lacked a shared framework.
+
+---
+
+## What I Delivered
+
+### 1. Standardized Release Notes Template
+
+I introduced a stable structure that could be reused for every release.
+
+| Section | Purpose |
+| --- | --- |
+| **New Features** | Introduces new functionality and explains what users can now do, where they can find it, and why it is useful. |
+| **Upgrade Considerations** | Highlights anything customers should understand or complete before upgrading, including configuration changes, migrations, compatibility requirements, permissions, and required preparation. |
+| **Improvements** | Describes meaningful enhancements to existing functionality, including usability, performance, accessibility, stability, and workflow improvements. |
+| **Bug Fixes** | Explains resolved problems from the user's perspective, focusing on the incorrect behavior and what now works as expected. |
+| **Known Issues** | Documents unresolved problems, affected users or scenarios, impact, and available workarounds. |
+| **Deprecations / Removals** | Identifies deprecated or removed functionality, expected timelines, customer impact, and recommended alternatives. This section is included only when relevant. |
+| **Technical Notes** | Provides implementation-level information for administrators, developers, and integrators, such as API, SDK, database, dependency, infrastructure, or configuration changes. This section is included only when relevant. |
+
+A stable structure helps readers learn where to find the information they need and makes different releases easier to compare.
+
+---
+
+### 2. Content and Clarity Guidelines
+
+I defined practical writing rules for every release note entry:
+
+- lead with the user-visible change
+- explain why the change matters
+- describe impact, not only implementation
+- use product terminology instead of internal team language
+- avoid copying ticket titles directly
+- identify affected roles, environments, or workflows
+- distinguish required action from general information
+- describe breaking changes directly
+- include a workaround for known issues whenever one exists
+- link to supporting documentation instead of repeating full procedures
+
+Each entry should answer three questions:
+
+1. What changed?
+2. Who or what does it affect?
+3. Does the user need to do anything?
+
+---
+
+### 3. Reusable Entry Pattern
+
+I created a compact pattern that contributors could use when drafting individual entries:
+
+```md
+### Clear, user-focused title
+
+Briefly explain what changed and why it matters.
+
+**Impact:** Describe affected users, workflows, environments, or integrations.
+
+**Action required:** State the required step, or write `None`.
+
+**Learn more:** Link to relevant documentation.
+
+Not every field needs to be displayed for every change. The pattern works primarily as a checklist, preventing important information from being lost during drafting.
+
+---
+
+### 4. Version and Release Metadata
+
+Each release includes consistent identifying information:
+
+- product or component name
+- version number
+- release date
+- release type, when relevant
+- supported deployment model or environment
+- link to upgrade documentation
+- link to the complete change history, when available
+
+This removes ambiguity about which product version and environment the information applies to.
+
+---
+
+### 5. Defined Contribution Workflow
+
+The release process assigns responsibilities before writing begins.
+
+1. **Engineering** provides technically accurate information about the change.
+2. **Product management** confirms scope, user value, and intended behavior.
+3. **Quality assurance** verifies fixed behavior and identifies remaining limitations.
+4. **Technical writing** rewrites the source material for the target audience and applies the release notes structure.
+5. **Required reviewers** validate accuracy, impact, terminology, and links.
+6. **The release owner** approves the final content for publication.
+
+This turns release notes from a last-minute writing task into a planned release deliverable.
+
+---
+
+### 6. Review Checklist
+
+Before publication, reviewers verify that:
+
+- the version and release date are correct
+- every item appears in the correct section
+- titles are specific and easy to scan
+- descriptions explain user impact
+- affected users and environments are identified
+- required actions are clearly marked
+- upgrade risks are not hidden
+- known issues include impact and workarounds
+- deprecated functionality includes an alternative or migration path
+- terminology matches the product documentation
+- supporting links resolve correctly
+- internal ticket IDs and confidential details are removed
+
+---
+
+### 7. Reference Release Notes
+
+I created a complete example release that demonstrated:
+
+- the expected structure
+- appropriate tone and level of detail
+- concise, user-focused titles
+- clear descriptions of impact
+- correct placement of different change types
+- how to communicate known issues and breaking changes
+- how to link release notes to supporting documentation
+
+The example gave contributors a practical reference instead of relying only on abstract writing rules.
+
+---
+
+## Example Transformation
+
+### Before
+
+> Fixed ALX-2841 where the new auth handler returned an incorrect state after token refresh.
+
+### After
+
+> **Authentication sessions now remain active after token refresh**
+>
+> Users are no longer signed out unexpectedly when an authentication token is refreshed. No action is required.
+
+The revised version removes the internal ticket number and implementation terminology. It describes the behavior users experienced and confirms whether they need to take action.
+
+---
+
+## Outcome
+
+The resulting system provides:
+
+- a predictable structure across products and releases
+- clearer communication for users, administrators, and developers
+- faster drafting through reusable patterns and examples
+- visible upgrade risks and required actions
+- explicit ownership and review responsibilities
+- easier onboarding for new contributors
+- better alignment between engineering, product, QA, support, and documentation
+- a maintainable foundation for release communication at scale
+
+The system does more than improve individual release notes. It establishes a repeatable process for turning internal product changes into useful customer-facing communication.
+
+---
+
+## Related Playbook
+
+For detailed writing guidance, see:
+
+[How to Write Release Notes People Actually Read](/docs/playbooks/release-notes-playbook)
