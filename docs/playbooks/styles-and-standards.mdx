@@ -1,8 +1,678 @@
 ---
-title: "Styles and Standards: Why It Matters"
+title: "Styles and Standards: Why They Matter"
+description: "A practical guide to creating documentation standards that improve consistency, reduce review time, and support multiple contributors."
 sidebar_position: 4
+tags:
+  - style-guide
+  - documentation-standards
+  - terminology
+  - content-design
+  - documentation-governance
 ---
 
-# Styles and Standards: Why It Matters
+# Styles and Standards: Why They Matter
 
-This playbook is currently being prepared.
+Documentation rarely has only one contributor.
+
+Technical writers, developers, product managers, support teams, and other subject matter experts may all create or review content. Without shared standards, each person makes reasonable but different decisions about terminology, structure, formatting, and tone.
+
+The result may be technically accurate, but it does not feel like one documentation product.
+
+Documentation standards create a shared set of decisions so contributors do not need to solve the same writing and formatting problems repeatedly.
+
+They help teams produce content that is:
+
+- consistent across pages and products
+- easier for users to scan and understand
+- faster to write and review
+- easier to maintain
+- less dependent on individual preferences
+
+:::info
+Consistency is not about making every sentence sound identical. It is about making documentation predictable enough that users can focus on the task instead of interpreting the writing.
+:::
+
+---
+
+## What Documentation Standards Include
+
+A style guide is one part of a broader documentation system.
+
+Useful standards may include:
+
+### Writing Style
+
+Rules for:
+
+- tone and voice
+- sentence structure
+- active and passive voice
+- second-person language
+- capitalization
+- punctuation
+- abbreviations
+- numbers, dates, and units
+- accessibility and inclusive language
+
+### Terminology
+
+Decisions about:
+
+- approved product names
+- UI labels
+- technical terms
+- preferred and prohibited terms
+- singular and plural forms
+- abbreviations
+- capitalization
+- terms that differ between products
+
+### Content Structure
+
+Patterns for:
+
+- conceptual overviews
+- procedures
+- API reference pages
+- release notes
+- troubleshooting articles
+- warnings and prerequisites
+- headings
+- introductions
+- related links
+
+### Formatting
+
+Rules for:
+
+- code
+- commands
+- file names
+- paths
+- parameters
+- UI elements
+- tables
+- lists
+- screenshots
+- notes, tips, and warnings
+
+### Process and Governance
+
+Guidance for:
+
+- requesting a new standard
+- approving terminology
+- documenting exceptions
+- reviewing changes
+- resolving conflicting rules
+- maintaining the guide
+- communicating updates to contributors
+
+A style guide describes how content should be written. Templates and acceptance criteria help contributors apply those decisions consistently.
+
+---
+
+## Why Consistency Matters
+
+Users should not need to determine whether **project**, **job**, and **workflow** refer to the same product object.
+
+They should not encounter one procedure that says:
+
+> Click the Save button.
+
+another that says:
+
+> Select **SAVE**.
+
+and another that says:
+
+> Hit save.
+
+Each individual sentence may be understandable. Across a documentation set, however, inconsistent choices create unnecessary cognitive load.
+
+Inconsistency can make users wonder:
+
+- Are these the same actions?
+- Does capitalization indicate a different object?
+- Is one term newer than another?
+- Does this instruction apply to a different product version?
+- Am I looking at content written for another audience?
+
+Shared terminology and patterns remove those questions.
+
+---
+
+## Standards Reduce Repeated Decisions
+
+Without a style guide, contributors repeatedly discuss questions such as:
+
+- Should UI labels be bold?
+- Do headings use sentence case or title case?
+- Should we write `sign in` or `log in`?
+- Do procedures begin with prerequisites?
+- Should API parameter descriptions end with periods?
+- Do we call this object a connection, configuration, or integration?
+- Where should upgrade warnings appear?
+
+These decisions may seem small, but they accumulate across reviews.
+
+When the decision is documented once, reviewers can focus on:
+
+- technical accuracy
+- missing information
+- user impact
+- workflow completeness
+- content usability
+
+instead of repeatedly correcting formatting and word choice.
+
+:::tip
+A useful standard removes recurring decisions. It should not create additional work without a clear benefit.
+:::
+
+---
+
+## Style Guide, Standard, Template, or Checklist?
+
+These tools serve different purposes.
+
+| Tool | Purpose | Example |
+| --- | --- | --- |
+| **Style guide** | Defines writing and formatting conventions | Use sentence case for headings |
+| **Terminology standard** | Defines approved product language | Use **connection**, not **connector instance** |
+| **Content standard** | Defines what a content type must include | Every procedure includes prerequisites and expected results |
+| **Template** | Provides a reusable content structure | Release notes template |
+| **Acceptance criteria** | Defines when content is complete | All parameters include type, requirement status, and description |
+| **Checklist** | Supports repeatable review | Verify links, examples, permissions, and version information |
+
+A team may need all of these, but they do not need to be created at once.
+
+---
+
+## Start With an Existing Guide
+
+Most teams do not need to write a complete language guide from scratch.
+
+A practical approach is to adopt an established standard as the default and document only product-specific decisions.
+
+Possible base guides include:
+
+- Microsoft Writing Style Guide
+- Google developer documentation style guide
+- Apple Style Guide
+- Red Hat style guidance
+- an organization-wide editorial standard
+
+For a software documentation team, the Microsoft Writing Style Guide is often a useful starting point because it covers:
+
+- procedural writing
+- UI terminology
+- technical language
+- accessibility
+- tone
+- common usage questions
+
+Your local guide can then state:
+
+> For language and formatting decisions not defined in this guide, follow the Microsoft Writing Style Guide.
+
+This avoids duplicating hundreds of general rules.
+
+:::warning
+Do not combine several external guides without defining which one takes precedence. Conflicting fallback standards create more ambiguity, not less.
+:::
+
+---
+
+## Document Product-Specific Decisions
+
+The most valuable internal standards are usually the ones an external guide cannot provide.
+
+These include:
+
+- official product and feature names
+- terminology shared across products
+- terms that must remain different
+- UI-specific capitalization
+- API naming conventions
+- deployment terminology
+- version references
+- content ownership
+- required sections for key document types
+
+For example:
+
+```md
+## Connection terminology
+
+Use **connection** for a saved configuration that allows the product to access an external system.
+
+Do not use:
+
+- connector
+- integration object
+- connection profile
+
+Use **connector** only for the software component that enables a connection type.
+```
+
+This is more useful than adding another general rule about avoiding long sentences.
+
+---
+
+## Create a Terminology Table
+
+A terminology table gives contributors a quick reference and makes review decisions easier to explain.
+
+| Preferred term | Avoid | Notes |
+| --- | --- | --- |
+| sign in | log in, login | Use **sign-in** only as an adjective |
+| select | click, choose | Use for UI controls unless a physical interaction matters |
+| connection | connector instance | A saved customer configuration |
+| on-premises | on-premise, on-prem | Use **on-premises** as adjective and noun |
+| release notes | release note | Use plural for the document type |
+
+Terminology entries should explain meaning, not only list prohibited words.
+
+For concepts that are easy to confuse, include:
+
+- definition
+- usage example
+- prohibited alternatives
+- product-specific exceptions
+- related terms
+
+---
+
+## Standardize Content Types
+
+Consistency is not only about grammar.
+
+Users benefit when the same type of content follows a predictable structure.
+
+### Procedure
+
+A standard procedure might include:
+
+1. purpose
+2. prerequisites
+3. required permissions
+4. numbered steps
+5. expected result
+6. next steps
+7. troubleshooting links
+
+### API Operation
+
+An operation page might include:
+
+1. purpose and usage context
+2. method and path
+3. authentication
+4. parameters
+5. request body
+6. responses
+7. errors
+8. examples
+9. related operations
+
+### Release Notes
+
+A release may use:
+
+1. new features
+2. upgrade considerations
+3. improvements
+4. bug fixes
+5. known issues
+6. deprecations and removals
+7. technical notes
+
+Templates reduce structural variation while still allowing writers to adapt content to the actual user need.
+
+---
+
+## Define What Must Be Consistent
+
+Not every difference is a documentation defect.
+
+Standardize decisions that affect:
+
+- comprehension
+- navigation
+- product meaning
+- accessibility
+- accuracy
+- searchability
+- maintainability
+- brand or legal requirements
+
+Examples include:
+
+- product terminology
+- UI references
+- heading hierarchy
+- code formatting
+- safety information
+- version notation
+- link text
+- date format
+- required metadata
+
+Do not standardize every stylistic preference simply because it can be standardized.
+
+Rules such as exact paragraph length or mandatory wording for every introduction can make content mechanical without improving usability.
+
+:::tip
+Standardize what users need to be predictable. Leave writers flexibility where variation does not create confusion.
+:::
+
+---
+
+## Write Rules That Contributors Can Apply
+
+A standard should be specific enough to use during authoring and review.
+
+### Too vague
+
+> Use clear language.
+
+### Better
+
+> Use familiar words and direct sentence structure. Replace internal component names with user-facing product terminology unless the internal name is required for troubleshooting.
+
+### Too vague
+
+> Keep procedures concise.
+
+### Better
+
+> Include one user action per numbered step. Move explanations, expected behavior, and supporting detail below the action instead of combining several actions in one step.
+
+### Too vague
+
+> Use consistent terminology.
+
+### Better
+
+> Use **workspace** for the user-visible container. Do not use **project** or **tenant** unless referring to a separate technical object.
+
+Good rules include:
+
+- the required choice
+- when it applies
+- an example
+- exceptions, when needed
+- the reason, when the rule is not self-explanatory
+
+---
+
+## Use Examples, Not Only Instructions
+
+Examples make standards faster to understand.
+
+### UI instructions
+
+**Avoid:**
+
+> Click on the blue Create button.
+
+**Prefer:**
+
+> Select **Create**.
+
+### Parameter descriptions
+
+**Avoid:**
+
+> `limit`: The limit.
+
+**Prefer:**
+
+> `limit`: Maximum number of records to return in one response. The default is `100`.
+
+### Link text
+
+**Avoid:**
+
+```md
+For more information, click [here](...).
+```
+
+**Prefer:**
+
+```md
+See [Configure OAuth 2.0 authentication](...) before sending your first request.
+```
+
+Examples reduce interpretation and make review feedback more objective.
+
+---
+
+## Keep the First Version Small
+
+A useful initial guide does not need to cover every possible decision.
+
+Start with recurring issues that currently consume review time or confuse users.
+
+A first version might contain:
+
+1. terminology
+2. voice and tone
+3. headings and capitalization
+4. UI references
+5. procedures
+6. code and commands
+7. links
+8. notes and warnings
+9. product names
+10. fallback external guide
+
+Two focused pages that contributors use are more valuable than a large guide that nobody can navigate.
+
+Add new rules when:
+
+- the same question appears repeatedly
+- conflicting usage reaches published content
+- a product decision needs to be preserved
+- reviewers repeatedly make the same correction
+- a new content type is introduced
+- a user-facing inconsistency causes confusion
+
+---
+
+## Make Standards Easy to Find
+
+A style guide fails when contributors cannot find the relevant rule during their work.
+
+Improve usability by providing:
+
+- search
+- clear categories
+- descriptive headings
+- a terminology index
+- examples
+- links from templates and checklists
+- links from authoring tools
+- a visible change history
+
+Do not organize the guide only by abstract grammar topics if contributors usually search by task.
+
+For example, contributors may look for:
+
+- how to document UI labels
+- how to write a warning
+- how to format API parameters
+- how to name a release
+- how to write a procedure
+
+Task-oriented navigation can make the guide more useful than a traditional editorial structure.
+
+---
+
+## Define Ownership
+
+A style guide needs an owner.
+
+Ownership does not mean one person makes every decision alone. It means someone is responsible for:
+
+- reviewing proposed changes
+- resolving conflicts
+- publishing updates
+- removing obsolete rules
+- coordinating product terminology
+- communicating significant changes
+- ensuring templates and examples remain aligned
+
+Without ownership, standards become outdated or collect contradictory rules.
+
+A lightweight process can be enough:
+
+1. A contributor identifies a recurring inconsistency.
+2. They propose a rule with examples and rationale.
+3. Relevant writers or product owners review it.
+4. The guide owner records the decision.
+5. The change is communicated to affected contributors.
+
+---
+
+## Record Exceptions Deliberately
+
+Sometimes consistency across products is not possible or desirable.
+
+For example:
+
+- two products may use different authentication flows
+- an API may use `snake_case` while the UI uses title case
+- legal terminology may differ by region
+- legacy configuration names may need to remain unchanged
+
+Do not hide these differences by forcing one misleading rule across all content.
+
+Document:
+
+- the standard rule
+- the exception
+- where the exception applies
+- why it exists
+- whether it is temporary or permanent
+
+From the user's perspective, accurate differences are better than false consistency.
+
+---
+
+## Avoid Standards Becoming Bureaucracy
+
+Standards stop helping when:
+
+- every minor choice requires approval
+- rules are added without a real user or maintenance benefit
+- contributors must search several disconnected guides
+- obsolete decisions are never removed
+- reviewers enforce personal preferences as official standards
+- exceptions require unnecessary meetings
+- the guide is too large to use during normal work
+
+A style guide should speed up decisions, not centralize every decision.
+
+Before adding a rule, ask:
+
+- Does this issue occur repeatedly?
+- Does inconsistency affect users?
+- Will the rule reduce future discussion?
+- Can contributors apply it consistently?
+- Is this a product requirement or only a personal preference?
+- Does the guide already contain a relevant rule?
+
+---
+
+## Integrate Standards Into the Workflow
+
+A style guide is most effective when it is part of normal authoring and review.
+
+Possible integrations include:
+
+- templates
+- pull request checklists
+- acceptance criteria
+- automated linting
+- Vale rules
+- reusable snippets
+- content reviews
+- onboarding materials
+- examples in the documentation repository
+
+Automation works well for objective rules such as:
+
+- prohibited terminology
+- heading capitalization
+- sentence length warnings
+- repeated words
+- inclusive language
+- formatting patterns
+
+Human review is still needed for:
+
+- audience fit
+- clarity
+- logical structure
+- missing context
+- user impact
+- technical accuracy
+
+Automation should support editorial judgment, not replace it.
+
+---
+
+## Practical Starter Structure
+
+A small documentation standards guide can begin with:
+
+```text
+Documentation Standards
+├── Voice and tone
+├── Terminology
+├── Product names
+├── Headings and titles
+├── Procedures
+├── UI elements
+├── Code and commands
+├── API documentation
+├── Links
+├── Notes and warnings
+├── Accessibility
+└── Exceptions and governance
+```
+
+Each section should contain only the decisions contributors need to apply.
+
+---
+
+## Review Checklist
+
+When reviewing documentation standards, verify that:
+
+- the guide identifies its intended audience
+- a fallback external standard is defined
+- product-specific terminology is documented
+- rules include practical examples
+- content-type requirements are clear
+- conflicting rules have been removed
+- exceptions are documented
+- contributors can search and navigate the guide
+- templates follow the documented standards
+- an owner is responsible for maintenance
+- the update process is lightweight and clear
+- outdated guidance is reviewed regularly
+
+---
+
+## Final Thoughts
+
+Documentation standards are not valuable because they create more rules.
+
+They are valuable because they preserve decisions, reduce repeated discussion, and make a documentation set feel like one coherent product.
+
+The strongest guide is not the longest one. It is the guide contributors can find, understand, and apply during real work.
+
+Start with recurring problems. Define practical decisions. Use examples. Record exceptions. Maintain the guide as the product and team evolve.
