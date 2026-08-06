@@ -1,8 +1,496 @@
 ---
-title: API Reference Overhaul
+title: "API Reference Overhaul"
+description: "Case study: Auditing an existing API documentation experience and redesigning its structure, usage guidance, and quality standards."
 sidebar_position: 1
+tags:
+  - api-documentation
+  - case-study
+  - developer-experience
+  - information-architecture
+  - documentation-strategy
+  - openapi
 ---
 
 # API Reference Overhaul
 
-This project is currently being prepared.
+An API reference can be technically complete and still leave developers unable to complete a real integration.
+
+In this project, endpoint and schema information existed, but essential usage context was fragmented, inconsistent, or missing. Authentication was not explained clearly, parameters lacked decision-making guidance, and manually written content was maintained separately from the OpenAPI specification.
+
+I audited the existing documentation experience, improved content within my area of ownership, and designed a broader approach for combining generated API reference content with practical developer guidance.
+
+> **My role:** Documentation audit, information architecture, API content design, authoring standards, and redesign recommendations.
+
+:::info
+Product names, endpoint details, and implementation-specific examples in this case study have been generalized.
+:::
+
+---
+
+## Project Context
+
+The platform included multiple products and API documentation sets.
+
+Although they belonged to the same broader ecosystem, they did not always follow the same patterns. Authentication differed between products, supporting guidance was maintained separately from the API specification, and individual operations varied considerably in documentation quality.
+
+Two recurring problems stood out:
+
+1. Some APIs documented available operations without explaining how developers could authenticate and make the first successful request.
+2. Other references contained large numbers of endpoints and parameters but provided little guidance about when or why particular options should be used.
+
+The documentation exposed the API structure, but it did not consistently support the complete developer journey.
+
+---
+
+## Project Goal
+
+Improve the API documentation experience by:
+
+- making authentication and prerequisites visible
+- explaining when and why developers should use each operation
+- improving parameter descriptions and usage guidance
+- connecting related operations into meaningful workflows
+- adding realistic request and response examples
+- establishing consistent quality criteria
+- reducing separation between generated reference content and manually maintained guidance
+- creating a maintainable structure that could scale across products
+
+The goal was not simply to rewrite descriptions. It was to make the API reference more usable as a developer product.
+
+---
+
+## Problems Identified
+
+### Authentication Was Missing From the User Journey
+
+For one API, the existing documentation did not provide enough information to complete authentication.
+
+The authentication behavior also differed from another product in the same ecosystem, which made assumptions based on existing product knowledge unreliable.
+
+Without access to a working environment, it was impossible to validate:
+
+- where credentials came from
+- which authentication flow applied
+- how tokens were obtained
+- which headers or scopes were required
+- whether the first documented request could succeed
+
+A developer could see the available endpoints but could not reliably make the first authenticated call.
+
+---
+
+### Parameters Were Defined but Not Explained
+
+Some operations contained many parameters, but their descriptions focused primarily on accepted types and values.
+
+Developers could see what the API accepted, but not always:
+
+- when to use a parameter
+- why one value should be selected instead of another
+- what happened when the parameter was omitted
+- which parameters were conditionally required
+- which combinations were valid
+- how a parameter affected the resulting behavior
+- whether behavior differed by product or environment
+
+A schema can describe valid syntax without explaining the decision a developer needs to make.
+
+---
+
+### Reference and Usage Guidance Were Separated
+
+The OpenAPI specification provided structured endpoint and schema information.
+
+Additional usage guidance was maintained separately to explain concepts that were difficult or inappropriate to express in the specification alone.
+
+This created two documentation layers:
+
+- generated reference content describing the API contract
+- manually written documentation describing how to use it
+
+The separation made it harder to:
+
+- keep both sources synchronized
+- navigate between an operation and its practical guidance
+- apply consistent terminology
+- identify which source was authoritative
+- review the complete developer experience
+- understand who owned the final result
+
+From the developer's perspective, these were not separate documentation products. They were one API experience.
+
+---
+
+### Endpoint Descriptions Lacked Usage Context
+
+Many summaries accurately repeated the operation name but did not explain its purpose.
+
+For example, a description might state that an operation retrieved a resource without explaining:
+
+- when the resource should be retrieved
+- what prerequisite operation created it
+- which returned value was needed next
+- whether the operation reflected current or cached state
+- which user role or integration scenario required it
+
+The content described the operation but did not help developers decide how it belonged in their workflow.
+
+---
+
+### Examples and Error Guidance Were Inconsistent
+
+Examples varied in quality and completeness.
+
+Common issues included:
+
+- placeholder-heavy payloads
+- missing authentication headers
+- examples that did not represent a complete workflow
+- request and response values that were difficult to connect
+- missing error payloads
+- status codes without corrective guidance
+- examples that could not be validated against a working environment
+
+This reduced trust in the reference and increased the amount of interpretation required from developers.
+
+---
+
+### Documentation Ownership Was Fragmented
+
+The API documentation crossed several ownership boundaries.
+
+Different teams were responsible for:
+
+- the API implementation
+- the OpenAPI specification
+- supporting conceptual documentation
+- product behavior
+- generated reference output
+- publishing infrastructure
+
+A proposal to combine the specification and supporting content into a more coherent experience was not prioritized because the documentation team did not own all required source material and systems.
+
+The limitation was organizational rather than editorial.
+
+:::warning
+When no team owns the complete developer journey, every individual source can be technically maintained while the overall experience continues to degrade.
+:::
+
+---
+
+## My Approach
+
+### 1. Audit the Complete Developer Journey
+
+I reviewed the documentation from the perspective of a developer unfamiliar with the products.
+
+The audit covered:
+
+- entry points and getting-started guidance
+- authentication
+- base URLs and environments
+- endpoint summaries and descriptions
+- parameters and schemas
+- examples
+- error responses
+- related operations
+- workflow guidance
+- terminology
+- navigation between generated and manually written content
+
+The central question was:
+
+> Can a developer use the available documentation to move from initial access to a successful result without relying on undocumented internal knowledge?
+
+---
+
+### 2. Test the API Where Access Was Available
+
+I requested access to sandbox or QA environments so I could validate the documented flow directly.
+
+Testing with tools such as Postman helped uncover questions that were not visible from the schema alone:
+
+- Which authentication procedure actually works?
+- Are the documented fields sufficient?
+- Which values are truly required?
+- Do the examples match the API response?
+- What errors are returned for invalid input?
+- Are environment-specific steps missing?
+- Can the complete workflow be reproduced?
+
+Testing converted vague documentation concerns into specific, verifiable questions for engineering and product teams.
+
+---
+
+### 3. Review OpenAPI and Supporting Content Together
+
+Instead of treating the OpenAPI specification and manually written documentation as unrelated sources, I evaluated them as parts of one experience.
+
+I identified information that belonged naturally in the specification:
+
+- operation summaries
+- parameter descriptions
+- schemas
+- required properties
+- enumerated values
+- response structures
+- error models
+- basic examples
+
+I also identified information that required supporting guidance:
+
+- authentication setup
+- product-specific prerequisites
+- end-to-end workflows
+- parameter selection guidance
+- environment differences
+- asynchronous behavior
+- troubleshooting
+- migration and lifecycle information
+
+This created a clearer division of responsibility between reference data and explanatory content.
+
+---
+
+### 4. Define Documentation Quality Criteria
+
+I created reusable acceptance criteria for API documentation.
+
+The criteria covered:
+
+- purpose and usage context
+- authentication and permissions
+- request parameters
+- request bodies
+- successful responses
+- errors
+- examples
+- operational constraints
+- related workflows
+- lifecycle information
+- consistency
+- testing and validation
+
+This gave contributors and reviewers a shared definition of what production-ready API documentation should contain.
+
+---
+
+## What I Delivered
+
+### Improved Endpoint Summaries and Descriptions
+
+I rewrote endpoint content to distinguish between:
+
+- **summary:** what the operation does
+- **description:** when, why, and under what conditions to use it
+
+Descriptions included practical context instead of repeating the endpoint name.
+
+### Before
+
+> Retrieves a connection.
+
+### After
+
+> Retrieves the configuration and current status of an existing connection. Use this operation after creating a connection or when checking whether its authentication remains valid.
+
+The revised description helps developers understand how the operation fits into a workflow.
+
+---
+
+### More Useful Parameter Documentation
+
+Parameter descriptions were expanded beyond type information.
+
+Where relevant, they explained:
+
+- intended use
+- allowed values
+- default behavior
+- conditional requirements
+- effect on the response
+- relationships with other parameters
+- product or environment differences
+
+### Before
+
+> `status`: Status value.
+
+### After
+
+> `status`: Filters connections by their current state. Use `active` to return connections that can process requests and `failed` to return connections that require attention.
+
+The revised description supports a developer decision instead of merely restating the parameter name.
+
+---
+
+### Authentication and Prerequisite Guidance
+
+I identified missing authentication information and worked with SMEs to clarify:
+
+- which authentication model applied
+- how it differed between products
+- where credentials were obtained
+- which permissions were required
+- how authentication could be tested
+- which information belonged in getting-started guidance
+- which details belonged in operation-level reference content
+
+This made authentication part of the documented workflow rather than an undocumented prerequisite.
+
+---
+
+### Realistic Request and Response Examples
+
+I improved examples to make them more representative of real API usage.
+
+Examples were designed to:
+
+- use meaningful values
+- match the documented schema
+- include required headers
+- connect request and response data
+- demonstrate common variants
+- support copy-and-adapt usage
+- avoid internal or confidential information
+
+Where a working environment was available, examples could be compared with real behavior.
+
+---
+
+### Error and Troubleshooting Guidance
+
+Error documentation was expanded beyond status-code lists.
+
+Relevant errors included:
+
+- the condition that triggered the response
+- the expected payload
+- the meaning of the error
+- the affected field or permission
+- whether retrying was appropriate
+- the corrective action, when available
+
+This helped transform error documentation from a list of failures into practical recovery guidance.
+
+---
+
+### Proposed Information Architecture
+
+I designed a structure that would combine generated reference content and manually written guidance more coherently.
+
+The proposed experience included:
+
+```text
+API Documentation
+├── Overview
+├── Getting Started
+│   ├── Environments and Base URLs
+│   ├── Authentication
+│   └── First Successful Request
+├── Guides
+│   ├── Common Workflows
+│   ├── Pagination
+│   ├── Asynchronous Operations
+│   └── Error Handling
+├── API Reference
+│   ├── Resource Group
+│   │   ├── Operation
+│   │   └── Operation
+│   └── Shared Schemas
+├── Migration and Lifecycle
+└── Release Notes
+```
+
+The reference would remain generated from the OpenAPI specification, while contextual guidance would sit alongside it with direct links between relevant pages.
+
+The objective was not to duplicate information. It was to connect the API contract with the guidance required to use it.
+
+---
+
+### Reusable Standards and Review Criteria
+
+The work produced reusable guidance for:
+
+- endpoint summaries and descriptions
+- parameter documentation
+- authentication
+- examples
+- errors
+- terminology
+- content structure
+- review responsibilities
+- publication readiness
+
+These standards could be applied incrementally even when a full platform redesign was not immediately possible.
+
+---
+
+## Implemented Improvements and Proposed Work
+
+Not every part of the proposed overhaul was implemented.
+
+### Implemented or Actionable Within the Existing Scope
+
+- documentation audit
+- improved summaries and descriptions
+- clearer parameter guidance
+- identified authentication gaps
+- improved examples and supporting explanations
+- reusable API documentation acceptance criteria
+- terminology and structural recommendations
+- targeted questions and validation with SMEs
+
+### Proposed for Broader Adoption
+
+- unified navigation between generated reference and supporting guides
+- consistent cross-product getting-started experience
+- shared authentication architecture
+- systematic validation of examples
+- consolidated ownership of the complete developer journey
+- a broader redesign combining OpenAPI content with manual documentation
+
+The larger redesign required coordination and ownership beyond the documentation team's control and was not prioritized at the time.
+
+Being explicit about that distinction matters. A case study should show both the quality of the solution and the constraints under which documentation work happens.
+
+---
+
+## Outcome
+
+The work resulted in:
+
+- clearer endpoint and parameter content in the areas reviewed
+- better visibility of authentication and prerequisite gaps
+- a documented model for combining OpenAPI reference data with usage guidance
+- reusable quality criteria for future API work
+- a more consistent approach to examples, errors, and terminology
+- a concrete roadmap for improving the wider developer documentation experience
+- clearer evidence that the remaining problems were structural and organizational, not merely editorial
+
+The project also demonstrated an important limitation of documentation work:
+
+A writer can improve individual pages, but a coherent API experience requires ownership across specifications, product behavior, supporting guides, and publishing systems.
+
+---
+
+## Key Lesson
+
+API documentation quality cannot be evaluated only by checking whether every endpoint and schema field appears in the reference.
+
+A useful API experience must connect:
+
+- the contract defined by the specification
+- the workflows developers are trying to complete
+- the product-specific context held by internal teams
+- the practical behavior of the running API
+
+The documentation succeeds when a developer can understand not only **what is available**, but also **how, when, and why to use it**.
+
+---
+
+## Related Content
+
+- [API Documentation Acceptance Criteria](/docs/playbooks/api-documentation-acceptance-criteria)
+- [Why API Documentation Fails](/docs/insights/why-api-docs-fail)
+- [SME Interviewing Playbook](/docs/playbooks/sme-interviewing-playbook)
