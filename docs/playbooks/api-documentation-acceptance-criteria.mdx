@@ -1,8 +1,539 @@
 ---
-title: API Documentation Acceptance Criteria
+title: "API Documentation Acceptance Criteria"
+description: "A practical definition of done for API documentation that is accurate, consistent, testable, and ready for use."
 sidebar_position: 2
+tags:
+  - api-documentation
+  - acceptance-criteria
+  - documentation-quality
+  - developer-experience
+  - documentation-standards
 ---
 
 # API Documentation Acceptance Criteria
 
-This playbook is currently being prepared.
+API documentation must be more than technically correct. It must give developers enough information to understand an operation, send a valid request, interpret the response, and recover when something goes wrong.
+
+These acceptance criteria provide a shared definition of done for API documentation created by technical writers, developers, product teams, and other contributors.
+
+They can be applied to individual API operations, larger API resources, or complete documentation releases.
+
+:::info
+Not every criterion applies to every operation. When a criterion is not relevant, mark it as **Not applicable** and record the reason instead of silently omitting it.
+:::
+
+---
+
+## How to Use These Criteria
+
+Use the criteria:
+
+- when planning documentation for a new API
+- during endpoint or operation reviews
+- when updating an OpenAPI specification
+- before publishing API documentation
+- when auditing an existing API reference
+- as part of a pull request or release checklist
+
+The criteria evaluate both the API reference and the supporting guidance required to use the API successfully.
+
+A complete OpenAPI schema is important, but it does not automatically provide workflow context, practical authentication instructions, tested examples, or troubleshooting guidance.
+
+---
+
+## 1. Purpose and Usage Context
+
+Each operation must explain:
+
+- what it does
+- who or what it is intended for
+- when a developer should use it
+- where it fits in the broader workflow
+- any prerequisites that must be completed first
+- any important side effects
+
+The description should help developers decide whether the operation is relevant to their task.
+
+### Weak
+
+> Returns a connection.
+
+### Better
+
+> Returns the configuration and current status of an existing connection. Use this operation after creating a connection or when checking whether authentication is still valid.
+
+:::tip
+A summary states **what the operation does**. A description explains **when, why, and under what conditions to use it**.
+:::
+
+---
+
+## 2. Operation Metadata
+
+Each operation must include:
+
+- a clear, action-oriented name
+- a concise summary
+- a complete description
+- the HTTP method
+- the complete URL path
+- a unique operation identifier, when used
+- relevant tags or resource grouping
+- the supported API version
+- the applicable environment or base URL
+
+Operation names and summaries must use consistent terminology across the API.
+
+Avoid vague names such as:
+
+- Get data
+- Update item
+- Run action
+- Process request
+
+Prefer specific names such as:
+
+- Retrieve a connection
+- Update user permissions
+- Start an export job
+- Refresh an access token
+
+---
+
+## 3. Authentication and Authorization
+
+The documentation must explain:
+
+- whether authentication is required
+- which authentication method is supported
+- how developers obtain credentials or tokens
+- where authentication information is sent
+- which scopes, roles, or permissions are required
+- whether authentication differs by environment or product
+- how token expiration and refresh are handled, when relevant
+- which errors indicate authentication or authorization failure
+
+Do not rely only on a security scheme name such as `OAuth2` or `BearerAuth`.
+
+Developers need enough information to complete the authentication flow and make the first successful request.
+
+:::warning
+An API reference is not usable when developers can see the endpoints but cannot determine how to authenticate.
+:::
+
+For operations that intentionally require no authentication, state that clearly when the distinction is important.
+
+---
+
+## 4. Request Parameters
+
+Every path, query, header, and cookie parameter must include:
+
+- name
+- location
+- data type
+- format, when applicable
+- whether it is required or optional
+- a clear description
+- allowed values or enumeration
+- default value, when applicable
+- minimum, maximum, or length constraints
+- expected syntax or pattern
+- an example value
+- behavior when the parameter is omitted
+- relationships with other parameters, when relevant
+
+Descriptions must explain how the parameter affects the operation.
+
+### Weak
+
+> `status`: Status value.
+
+### Better
+
+> `status`: Filters results by the current connection status. Use `active` to return connections that can process requests and `failed` to return connections that require attention.
+
+For conditionally required parameters, explain the condition explicitly.
+
+For example:
+
+> Required when `authenticationType` is set to `oauth2`.
+
+---
+
+## 5. Request Body
+
+When an operation accepts a request body, the documentation must include:
+
+- the supported content type
+- the complete request schema
+- descriptions for all properties
+- required and optional properties
+- nested object definitions
+- allowed values
+- default values
+- validation constraints
+- conditional relationships between properties
+- a realistic request example
+
+The schema must match the actual behavior of the API.
+
+If several request variants are supported, explain when to use each one and provide appropriate examples.
+
+---
+
+## 6. Successful Responses
+
+Each successful response must include:
+
+- the HTTP status code
+- the response content type
+- the complete response schema
+- descriptions for returned fields
+- nullable or optional field behavior
+- relevant headers
+- a realistic response example
+
+Document all meaningful successful outcomes, not only `200 OK`.
+
+Depending on the operation, these may include:
+
+- `201 Created`
+- `202 Accepted`
+- `204 No Content`
+- redirect responses
+- partial or paginated responses
+
+For asynchronous operations, explain:
+
+- how the developer receives the job or operation identifier
+- how to check progress
+- how completion or failure is represented
+- how to retrieve the final result
+
+---
+
+## 7. Error Responses
+
+Document errors that developers can reasonably encounter and act on.
+
+Each documented error must include:
+
+- the HTTP status code
+- the error condition
+- the response schema
+- a realistic error payload
+- the meaning of the error
+- the corrective action, when one exists
+- whether retrying the request is appropriate
+
+### Weak
+
+> `400 Bad Request`: The request is invalid.
+
+### Better
+
+> `400 Bad Request`: Returned when the request body is missing a required property or contains a value that does not match the expected format. Review the `details` array in the response to identify the invalid property.
+
+Do not document every theoretically possible server response at every operation. Focus on errors that are relevant to the documented behavior.
+
+If the API uses a shared error model, define it once and link to it consistently.
+
+:::info
+A status code tells developers that a request failed. Useful error documentation tells them why it failed and what to do next.
+:::
+
+---
+
+## 8. Examples
+
+Each operation should include the examples needed to understand and test its normal usage.
+
+Depending on the operation, this may include:
+
+- a cURL request
+- a request body
+- a successful response
+- a relevant error response
+- an SDK or programming-language example
+- an example showing optional or conditional behavior
+
+Examples must:
+
+- use realistic values
+- match the documented schema
+- include required headers
+- use the correct base URL and API version
+- avoid internal credentials or confidential data
+- represent behavior supported by the API
+- be tested whenever a working environment is available
+
+The minimum useful example should help a developer answer:
+
+> What is the smallest valid request I can send to confirm that this operation works?
+
+Avoid placeholder-heavy examples such as:
+
+```json
+{
+  "string": "string",
+  "value": 0,
+  "enabled": true
+}
+```
+
+Use values that communicate meaning:
+
+```json
+{
+  "connectionName": "Production CRM",
+  "region": "eu-central",
+  "enabled": true
+}
+```
+
+---
+
+## 9. Operational Behavior and Constraints
+
+Document behavior that affects how developers use the operation.
+
+When relevant, include:
+
+- pagination
+- sorting and filtering
+- rate limits
+- request or payload size limits
+- timeouts
+- asynchronous processing
+- retry behavior
+- idempotency
+- concurrency restrictions
+- data retention
+- eventual consistency
+- supported file types
+- environment-specific behavior
+- licensing or edition restrictions
+
+Do not force developers to discover these constraints through failed requests.
+
+When rate limits apply, explain:
+
+- the applicable limit
+- whether it is global or operation-specific
+- the time window
+- relevant response headers
+- the response returned when the limit is exceeded
+- recommended retry behavior
+
+---
+
+## 10. Workflow and Related Operations
+
+Operations must not be documented only as isolated technical objects when users need several of them to complete a task.
+
+The documentation should identify:
+
+- prerequisite operations
+- the recommended order of requests
+- values that must be passed between operations
+- follow-up operations
+- related resources
+- complete task-oriented guides
+
+For example, a developer may need to:
+
+1. create an export job
+2. retrieve the job identifier
+3. check the job status
+4. download the completed file
+
+All four operations may be accurate individually while the overall documentation still fails to explain the workflow.
+
+---
+
+## 11. Versioning and Lifecycle
+
+The documentation must clearly identify:
+
+- the current API version
+- the version in which the operation was introduced, when relevant
+- whether the operation is stable, experimental, beta, or deprecated
+- backward-incompatible behavior
+- planned removal dates, when confirmed
+- the recommended replacement for deprecated functionality
+- migration instructions
+- relevant release notes or changelog entries
+
+Deprecated operations must not be marked only with a visual label.
+
+Developers also need to know:
+
+- why the operation is deprecated
+- what they should use instead
+- when migration must be completed
+- what will stop working after removal
+
+---
+
+## 12. Navigation and Supporting Documentation
+
+The operation must link to supporting information required for successful use.
+
+Relevant links may include:
+
+- getting-started guidance
+- authentication instructions
+- task-oriented guides
+- related operations
+- shared schemas
+- error model documentation
+- pagination guidance
+- rate-limit documentation
+- migration guides
+- release notes
+- SDK documentation
+
+Use descriptive link text.
+
+### Avoid
+
+```md
+For more information, click [here](...).
+```
+
+### Prefer
+
+```md
+See [Configure OAuth 2.0 authentication](...) before sending your first request.
+```
+
+---
+
+## 13. Consistency
+
+The following must be consistent across the API documentation:
+
+- operation naming
+- resource terminology
+- parameter descriptions
+- capitalization
+- request and response property naming
+- date and time formats
+- identifier formats
+- error structure
+- example style
+- heading structure
+- link conventions
+- tone and level of detail
+
+When an operation behaves differently for a legitimate reason, explain the difference.
+
+Consistency must not hide real product differences. For example, when two products use different authentication flows, document each flow accurately instead of implying that one shared procedure applies to both.
+
+---
+
+## 14. Accuracy and Validation
+
+Before publication, the documentation must be validated against authoritative sources.
+
+Validation may include:
+
+- reviewing the OpenAPI specification
+- comparing schemas with the implementation
+- testing examples in a sandbox or QA environment
+- completing the documented workflow end to end
+- validating behavior with engineering
+- confirming user impact with product management
+- checking errors and limitations with QA
+- verifying links and generated output
+
+A technical review confirms factual accuracy. A usability test confirms whether someone can follow the documentation successfully.
+
+Both matter.
+
+:::warning
+A document that has been reviewed but never tested may still contain missing prerequisites, invalid examples, or an unusable workflow.
+:::
+
+---
+
+## 15. Publication Readiness
+
+Before publishing, confirm that:
+
+- the content contains no internal ticket language
+- there are no unresolved `TODO` comments
+- placeholders have been replaced
+- confidential values have been removed
+- examples use safe test data
+- links resolve correctly
+- formatting renders correctly
+- terminology follows the style guide
+- the documented API version matches the release
+- applicable lifecycle warnings are visible
+- required supporting guides are published
+
+Documentation must not be published as complete when essential information is still unknown.
+
+---
+
+## Definition of Done
+
+An API operation is ready for publication when:
+
+- [ ] its purpose and intended use are clear
+- [ ] the HTTP method and path are correct
+- [ ] authentication and permissions are documented
+- [ ] all request parameters are described
+- [ ] the request body matches the implementation
+- [ ] successful responses are documented
+- [ ] relevant error responses include corrective guidance
+- [ ] examples are realistic and valid
+- [ ] prerequisites and constraints are visible
+- [ ] related operations and workflows are linked
+- [ ] version and lifecycle information is accurate
+- [ ] terminology and formatting are consistent
+- [ ] the content has been technically reviewed
+- [ ] the documented workflow has been tested when possible
+- [ ] no unresolved placeholders or internal information remain
+- [ ] all links and generated pages have been checked
+
+:::tip
+The real readiness test is not whether every schema field appears on the page. It is whether a developer unfamiliar with the system has enough reliable information to complete the intended task.
+:::
+
+---
+
+## Handling Exceptions
+
+Some operations are intentionally simple and will not require every element in this playbook.
+
+For example:
+
+- an operation with no request body does not need request-body examples
+- an internal health-check operation may not need a task-oriented guide
+- an operation returning `204 No Content` does not need a response-body schema
+- rate-limit information may be documented once at API level instead of repeated on every page
+
+Record these criteria as **Not applicable** where the review process requires evidence of completion.
+
+An exception should be deliberate and explainable, not the result of missing information.
+
+---
+
+## Final Thoughts
+
+Acceptance criteria make API documentation quality visible and reviewable.
+
+They reduce dependence on individual writing habits and give technical writers, engineers, product managers, and reviewers a shared understanding of what “ready” means.
+
+Consistency builds trust, but completeness alone is not enough. API documentation is ready when it is accurate, understandable, and usable in practice.
+
+---
+
+## Related Insight
+
+These criteria address many of the recurring gaps described in:
+
+[Why API Documentation Fails](/docs/insights/why-api-docs-fail)
